@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 class Turma{
     private int numero;
     private String professor;
@@ -15,6 +17,15 @@ class Turma{
         this.alunos = new Aluno[vagas];
         this.qtdadeAlunos = 0;
     }
+
+    public int getNroTurma(){
+        return numero;
+    }
+
+    public String getNomeProfessor(){
+        return professor;
+    }
+
     public void novoAluno(Aluno aluno){
         if (qtdadeAlunos == vagas){
             throw new IllegalStateException("Turma cheia!");
@@ -22,8 +33,9 @@ class Turma{
         alunos[qtdadeAlunos] = aluno;
         qtdadeAlunos++;
     }
+
     public Aluno recuperaAlunoPorMatricula(long matricula){
-        for (int i = 0; i < qtdadeAlunos; i++){
+        for(int i=0;i<qtdadeAlunos;i++){
             if (alunos[i].getMatricula() == matricula){
                 return alunos[i];
             }
@@ -31,22 +43,31 @@ class Turma{
         return null;
     }
 
-    public void informaNotas()long nmatricula, int nroNota, float nota){
-        Aluno aluno = recuperaAlunoPorMatricula(nmatricula);
-        if (aluno == null){
-            throw new IllegalArgumentException("Aluno não encontrado");
-        }
-        aluno.setNota(nroNota,nota);
+    public void informaNota(long matricula, int nroNota, float nota){
+        Aluno aluno = recuperaAlunoPorMatricula(matricula);
+        if (aluno == null) throw new IllegalArgumentException("Aluno inexistente");
+        aluno.setNota(nroNota, nota);
     }
-    
+
     public Aluno[] getAlunos(){
-     return Arrays.copyOf(alunos,qtdadeAlunos);
+        return Arrays.copyOf(alunos,qtdadeAlunos);
     }
 
     public Aluno[] aprovados(){
         int cont = 0;
-        for(int i = 0; i < qtdadeAlunos; i++){
-            if (alunos[i].notasValidas() && alunos[i]aprovados(){
+        for(int i=0;i<qtdadeAlunos;i++){
+            if (alunos[i].notasValidas() && alunos[i].aprovado()){
                 cont++;
             }
+        }
+        Aluno aprovados[] = new Aluno[cont];
+        int pos = 0;
+        for(int i=0;i<qtdadeAlunos;i++){
+            if (alunos[i].notasValidas() && alunos[i].aprovado()){
+                aprovados[pos] = alunos[i];
+                pos++;
+            }
+        }
+        return aprovados;
     }
+}
