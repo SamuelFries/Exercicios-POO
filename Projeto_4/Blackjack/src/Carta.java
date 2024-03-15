@@ -1,36 +1,22 @@
-class Carta{
+public class Carta {
+    private ValorDeUmaCarta valorDeUmaCarta;
     private Naipe naipe;
-    private ValorCarta valor;
 
-    public Carta(Naipe naipe, Valor valor) {
+    public Carta(ValorDeUmaCarta valor, Naipe naipe) {
+        this.valorDeUmaCarta = valor;
         this.naipe = naipe;
-        this.nome = nome;
-        
+    }
+
+    public ValorDeUmaCarta getValorDeUmaCarta() {
+        return valorDeUmaCarta;
     }
 
     public Naipe getNaipe() {
         return naipe;
     }
 
-    public void setNaipe(String naipe) {
-        this.naipe = naipe;
-    }
-
-    public String getNome() {
-        return this.nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getValor() {
-        return this.valor;
-    }
-
-    public void setValor(int valor) {
-        this.valor = valor;
-    }
-        this.valor = valor;
-    }
+    @Override
+    public String toString() {
+        return "Carta [valor=" + valorDeUmaCarta + ", naipe=" + naipe + "]";
+    }    
 }

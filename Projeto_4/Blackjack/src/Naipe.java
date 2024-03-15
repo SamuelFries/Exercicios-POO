@@ -1,4 +1,3 @@
 public enum Naipe {
-    public 
-
+    OUROS, PAUS, COPAS, ESPADAS
 }
