@@ -8,5 +8,7 @@ public class App {
 
         Professor p = new Professor("Outro amigo do Ze",1000,22);
         System.out.println(p);
+        
+        Pesquisador pesq = new Pesquisador("primo do Ze", 1000, 20, 0)
     }
 }
