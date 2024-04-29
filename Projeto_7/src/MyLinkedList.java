@@ -1,47 +1,52 @@
+package src;
 import java.util.Iterator;
 
-public class MyArrayList<E> implements MyList<E>{
-    private int capacity;
-    private E[] base;
-    private int count;
+public class MyLinkedList<E> implements MyList<E> {
+    private class Node<T>{
+        public T element;
+        public Node<T> next;
 
-    public class MyIterator<E> implements Iterator<E>{
-        private int current;
+        public Node(T element){
+            this.element = element;
+            this.next = null;
+        }
+    }
+
+    public class MyIterator<U> implements Iterator<U>{
+        private Node<U> current;
 
         public MyIterator(){
-            current = 0;
+            current = (Node<U>)head;
         }
 
         @Override
         public boolean hasNext() {
-            return current != count;
+            return current != null;
         }
 
         @Override
-        public E next() {
-            E element = (E)(base[current]); 
-            current++;
+        public U next() {
+            U element = current.element;
+            current = current.next;
             return element;
         }
     }
-
-    public MyArrayList(){
-        capacity = 10;
-        count = 0;
-        base = (E[])(new Object[capacity]);
-    }
+    
+    private Node<E> head;
+    private Node<E> tail;
+    private int count;
 
     @Override
     public void add(E element) {
-        if (count == capacity){
-            E[] newBase = (E[])(new Object[capacity*2]);
-            for(int i=0;i<capacity;i++){
-                newBase[i] = base[i];
-            }
-            capacity = capacity*2;
-            base = newBase;
+        Node<E> newNode = new Node<>(element);
+        if (head == null){
+            head = newNode;
+            tail = head;
+            count = 1;
+            return;
         }
-        base[count] = element;
+        tail.next = newNode;
+        tail = newNode;
         count++;
     }
 
@@ -50,14 +55,18 @@ public class MyArrayList<E> implements MyList<E>{
         if (i < 0 || i >= count){
             throw new IndexOutOfBoundsException("Indice invalido: "+i);
         }
-        return base[i];
+        Node<E> aux = head;
+        for(int c=0; c<i; c++){
+            aux = aux.next;
+        }
+        return aux.element;
     }
 
     @Override
     public Iterator<E> getIterator(){
         return new MyIterator<>();
     }
-    
+
     @Override
     public int size() {
         return count;
@@ -74,5 +83,4 @@ public class MyArrayList<E> implements MyList<E>{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'add'");
     }
-    
 }
